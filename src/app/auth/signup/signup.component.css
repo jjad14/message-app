@@ -1,0 +1,74 @@
+mat-card {
+    margin-top: 2rem;
+}
+
+mat-form-field {
+    width: 100%;
+    margin: 1rem 0 1rem;
+}
+
+mat-spinner {
+    margin: auto;
+}
+
+input[type="file"] {
+    visibility: hidden;
+}
+
+.image-preview {
+    height: 5rem;
+    margin: 1rem 0;
+}
+
+.image-preview img {
+    height: 100%;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+    margin: 1rem;
+}
+
+.form-group mat-form-field {
+    margin: 0 2rem;
+}
+
+.form-group2 {
+    display: flex;
+    flex-direction: row;
+    margin: 1rem;
+}
+
+.form-group2 mat-form-field {
+    margin: 0 2rem;
+}
+
+/* .gender-form {
+    order: 1;
+    width: 40%;
+}
+
+.password-form {
+    order: 2;
+    margin-top: 1rem;
+    width: 90%;
+} */
+
+
+.image-form {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 2rem;
+}
+
+.image-items {
+    align-self: center;
+}
+
+.submit-button {
+    display: flex;
+    justify-content: center;
+}

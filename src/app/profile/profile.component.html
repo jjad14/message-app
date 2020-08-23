@@ -1,0 +1,122 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<mat-card>
+    <mat-card-title>Profile Information</mat-card-title>
+      <form [formGroup]="form" (submit)="onEdit()" *ngIf="!isLoading">
+        <div class="form-group">
+            <mat-form-field>
+              <input 
+                matInput 
+                type="text"
+                formControlName="username"
+                autocomplete="off"
+                placeholder="Username">
+                <mat-error *ngIf="form.get('username').invalid">Please enter a valid username.</mat-error>
+            </mat-form-field>
+      
+            <mat-form-field>
+              <input 
+                matInput 
+                type="text"
+                formControlName="email"
+                autocomplete="off"
+                placeholder="Email Address">
+                <mat-error *ngIf="form.get('email').invalid">Please enter a valid email.</mat-error>
+            </mat-form-field>
+          </div>
+      
+          <div class="form-group">
+            <mat-form-field>
+              <input 
+                matInput 
+                type="text"
+                formControlName="firstName"
+                autocomplete="off"
+                placeholder="First Name">
+                <mat-error *ngIf="form.get('firstName').invalid">Please enter a valid first name.</mat-error>
+            </mat-form-field>
+      
+            <mat-form-field>
+              <input 
+                matInput 
+                type="text"
+                formControlName="lastName"
+                autocomplete="off"
+                placeholder="Last Name">
+                <mat-error *ngIf="form.get('lastName').invalid">Please enter a valid last name.</mat-error>
+            </mat-form-field>
+          </div>
+    
+          <div class="form-group2">
+            <div class="gender-form">
+              <mat-form-field>
+                <mat-label>Gender</mat-label>
+                <select matNativeControl formControlName="gender">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+                <mat-error *ngIf="form.get('gender').invalid">Please select a gender.</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="button-form">
+            <button id="submit-button"
+                mat-raised-button color="primary" 
+                [disabled]="!form.valid"
+                type="submit">Edit Profile</button>
+        </div>
+      </form>
+      <div class="delete">
+          <button id="delete-button"
+          mat-raised-button color="warn"
+          [disabled]="!form.valid"
+          (click)="onDeleteProfile()">Delete Profile</button>
+      </div>
+</mat-card>
+
+<!-- For Posts -->
+<mat-card>
+    <mat-card-title>My Posts</mat-card-title>
+    <mat-accordion multi="true" *ngIf="posts.length > 0 && !isLoading">
+        <mat-expansion-panel *ngFor="let post of posts">
+
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ post.title | titlecase }}
+                  </mat-panel-title>
+                  
+                  <mat-panel-description>
+                    {{ post.content | shorten: post.title }}
+                  </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="content-block">
+              <div class="post-image">
+                  <img [src]="post.imagePath" [alt]="post.title">
+              </div>
+  
+              <div class="content">
+                  <p>{{ post.content }}</p>
+              </div>
+          </div>
+
+            <mat-action-row *ngIf="userIsAuthenticated && userId === post.creator">
+                <a mat-raised-button color="accent" [routerLink]="['/edit', post.id]">EDIT</a>
+                <button mat-raised-button color="warn" (click)="onDeletePost(post.id)">DELETE</button>
+            </mat-action-row>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">No posts added yet!</p> 
+</mat-card>
+
+
+<div class="paginator">
+    <mat-paginator [length]="totalPosts" 
+        [pageSize]="postsPerPage"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onChangedPage($event)"
+        *ngIf="posts.length > 0">
+    </mat-paginator>
+</div>

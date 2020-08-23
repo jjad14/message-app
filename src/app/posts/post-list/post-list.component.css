@@ -1,0 +1,54 @@
+:host {
+    display: block;
+    margin-top: 1rem;
+}
+
+.info-text {
+    text-align: center;
+}
+
+mat-spinner {
+    margin: auto;
+}
+
+/* Content */
+.content-block {
+    display: flex;
+    flex-direction: row;
+}
+
+.content {
+    margin-left: 1rem;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.post-image img {
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Comment Form */
+.comments {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.comments mat-form-field{
+    width: 100%;
+}
+
+/* Paginator */
+mat-paginator {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.paginator {
+    width: 100%;
+}

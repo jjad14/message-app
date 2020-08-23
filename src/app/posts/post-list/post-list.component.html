@@ -1,0 +1,71 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<mat-accordion multi="true" *ngIf="posts.length > 0 && !isLoading">
+    <mat-expansion-panel *ngFor="let post of posts">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{ post.title | titlecase }}
+              </mat-panel-title>
+              <mat-panel-description>
+                {{ post.content | shorten: post.title }}
+              </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="content-block">
+            <div class="post-image">
+                <img [src]="post.imagePath" [alt]="post.title">
+            </div>
+
+            <div class="content">
+                <p>{{ post.content }}</p>
+            </div>
+        </div>
+
+        <mat-action-row *ngIf="userIsAuthenticated && userId === post.creator">
+            <a mat-raised-button color="primary" [routerLink]="['/edit', post.id]">Edit Post</a>
+            <button mat-raised-button color="warn" (click)="onDelete(post.id)">Delete Post</button>
+        </mat-action-row>
+        
+        <mat-action-row class="comments" *ngIf="userIsAuthenticated">
+            <form (ngSubmit)="onComment(commentForm, post)" #commentForm="ngForm">
+                <mat-form-field>
+                    <textarea
+                        matInput
+                        rows="2"
+                        autocomplete="off"
+                        required
+                        name="comment"
+                        ngModel
+                        minlength="1"
+                        placeholder="Post Comment"
+                        #commentInput="ngModel">
+                    </textarea>
+                    <!-- <textarea
+                        matInput
+                        rows="2"
+                        autocomplete="off"
+                        required
+                        name="comment"
+                        [(ngModel)]="comment"
+                        [ngModelOptions]="{standalone: true}"
+                        minlength="1"
+                        placeholder="Post Comment"
+                        #commentInput="ngModel"> -->
+                </mat-form-field>
+                <button mat-raised-button color="accent" type="submit">Post Comment</button>
+            </form>
+        </mat-action-row>
+
+    </mat-expansion-panel>
+</mat-accordion>
+
+<div class="paginator">
+    <mat-paginator [length]="totalPosts" 
+        [pageSize]="postsPerPage"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onChangedPage($event)"
+        *ngIf="posts.length > 0">
+    </mat-paginator>
+</div>
+
+<p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">No posts added yet!</p> 
