@@ -128,8 +128,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.userId,
             this.userData
         );
-
-        // get User again?
     }
 
     // pagination

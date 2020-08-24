@@ -163,16 +163,17 @@ exports.deletePost = (req, res, next) => {
             Comment.deleteMany({ postId: req.params.id })
                 .then(result => {
                     //  check if no errors occurred since we cant check deletedCount 
-                    if (result.ok == 1){
+                    if (result.ok == 1 || result.deletedCount > 0){
                         return res.status(200).json({
                             message: "Deletion Successful."
                         });
                     }
                 })
+        } else {
+            res.status(401).json({
+                message: "You are not authorized."
+            });
         }
-        res.status(401).json({
-            message: "You are not authorized."
-        });
     })
     .catch(error => {
         res.status(500).json({

@@ -26,6 +26,7 @@ export class ThreadService {
             this.observePostSocket();
         }
 
+    // Add Comment to Post
     addComment(id: string, username: string, content: string) {
         const commentData = {
             username,
@@ -38,11 +39,11 @@ export class ThreadService {
             commentData
         )
         .subscribe((resData) => {
-            // this.router.navigate(['/thread', id]);
             this.threadSocketService.emitCreateCommentSocket(resData.comment);
         });
     }
 
+    // Get comments of a specific post
     getComments(id: string, commentPerPage: number, currentPage: number) {
         const queryParams = `?pagesize=${commentPerPage}&page=${currentPage}`;
         this.http
@@ -52,8 +53,6 @@ export class ThreadService {
                 map(commentData => {
                     return {
                         comments: commentData.comments.map(comment => {
-                        // const date = new Date(comment.createdAt);
-                        // date.toDateString();
                         return {
                             content: comment.content,
                             createdBy: comment.createdBy,
@@ -81,20 +80,15 @@ export class ThreadService {
     private observePostSocket() {
         this.threadSocketService.receiveCreateCommentSocket()
         .subscribe((comment: any) => {
-          console.log(`Create ${comment.id} Post socket received`);
+          console.log(`Create ${comment.id} Comment socket received`);
           this.refreshComments(comment);
         });
-
-
     }
 
     // refresh posts
     private refreshComments(comment: any) {
-    if (comment.createdId !== this.authService.getUserId()) {
-        // this.getPosts();
+        if (comment.createdId !== this.authService.getUserId()) {
+            // this.getComments()
+        }
     }
-    }
-
 }
-
-

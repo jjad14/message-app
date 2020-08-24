@@ -100,6 +100,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
     }
 
+    // pagination
     onChangedPage(pageData: PageEvent) {
         this.isLoading = true;
         this.currentPage = pageData.pageIndex + 1;
@@ -107,6 +108,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
         this.threadService.getComments(this.postId, this.commentsPerPage, this.currentPage);
     }
 
+    // submit comment
     onComment(form: NgForm, event: Event) {
         if (form.invalid) {
             return;

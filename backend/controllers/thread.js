@@ -37,6 +37,7 @@ exports.createComment = (req, res, next) => {
     });
 };
 
+// Get Comments
 exports.getComments = (req, res, next) => {
     // pagination query paramaters
     const pageSize = +req.query.pagesize;
@@ -70,10 +71,6 @@ exports.getComments = (req, res, next) => {
     });
 };
 
-// exports.editComment = (req, res, next) => {
 
-// };
-
-// exports.deleteComment = (req, res, next) => {
-
-// };
+// exports.editComment = (req, res, next) => {};
+// exports.deleteComment = (req, res, next) => {};

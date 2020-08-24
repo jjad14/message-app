@@ -129,10 +129,10 @@ exports.deleteUser = (req, res, next) => {
         if(result.deletedCount > 0) {
             Post.deleteMany({creator: req.params.id})
                 .then(result => {
-                    if (result.ok == 1) {
+                    if (result.ok == 1 || result.deletedCount > 0) {
                         Comment.deleteMany({ createdId: req.params.id })
                         .then(result => { 
-                            if (result.ok == 1){
+                            if (result.ok == 1 || result.deletedCount > 0){
                                 return res.status(200).json({
                                     message: "Deletion Successful."
                                 });
@@ -140,10 +140,11 @@ exports.deleteUser = (req, res, next) => {
                         })
                     }
                 });
-        } 
-        res.status(400).json({
-            message: "Deleting Profile failed"
-        });
+        }else {
+            res.status(400).json({
+                message: "Deleting Profile failed"
+            });
+        }
     })
     .catch(error => {
         res.status(500).json({
