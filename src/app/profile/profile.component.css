@@ -68,7 +68,6 @@ input[type="file"] {
     text-align: center;
 }
 
-
 .button-form {
     display: flex;
     justify-content: flex-end;
@@ -103,6 +102,16 @@ input[type="file"] {
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.action-link {
+    margin: 0 0.5rem;
 }
 
 .post-image img {

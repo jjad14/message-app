@@ -5,10 +5,8 @@ const postSchema = mongoose.Schema({
     content: {type: String, required: true},
     imagePath: {type: String, required: true},
     creator: { type: mongoose.Schema.Types.ObjectId, ref:"User", required: true},
-    comments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        default: undefined,
-        ref: 'Comment' }]
+}, {
+    timestamps: true
 });
 
 // collection name will be all lowercase and plural = posts.

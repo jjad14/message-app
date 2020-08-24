@@ -8,6 +8,8 @@ const userSchema = mongoose.Schema({
     lastName: { type: String, required: true },
     gender: { type: String, required: true },
     password: { type: String, required: true }
+}, {
+    timestamps: true
 });
 
 // plugin for our schema - allows unique values to be unique in database - else throws error 

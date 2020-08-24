@@ -68,8 +68,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
                                     title: postData.title,
                                     content: postData.content,
                                     imagePath: postData.imagePath,
-                                    creator: postData.creator,
-                                    comments: null
+                                    creator: postData.creator
                         };
                         // insert post data onto form fields
                         this.form.setValue({

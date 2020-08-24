@@ -4,8 +4,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-const postsRoutes = require('./routes/posts');
 const userRoutes = require('./routes/user');
+const postsRoutes = require('./routes/posts');
+const threadRoutes = require('./routes/thread');
 
 // Creating express server
 const app = express();
@@ -52,5 +53,8 @@ app.use("/api/posts", postsRoutes);
 
 // Routes that start with /api/user
 app.use("/api/user", userRoutes);
+
+// Routes that start with /api/thread
+app.use("/api/thread", threadRoutes);
 
 module.exports = app;

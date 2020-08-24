@@ -13,7 +13,7 @@
 
         <div class="content-block">
             <div class="post-image">
-                <img [src]="post.imagePath" [alt]="post.title">
+                <img [src]="post.imagePath" align="left" [alt]="post.title">
             </div>
 
             <div class="content">
@@ -21,39 +21,20 @@
             </div>
         </div>
 
-        <mat-action-row *ngIf="userIsAuthenticated && userId === post.creator">
-            <a mat-raised-button color="primary" [routerLink]="['/edit', post.id]">Edit Post</a>
-            <button mat-raised-button color="warn" (click)="onDelete(post.id)">Delete Post</button>
-        </mat-action-row>
-        
-        <mat-action-row class="comments" *ngIf="userIsAuthenticated">
-            <form (ngSubmit)="onComment(commentForm, post)" #commentForm="ngForm">
-                <mat-form-field>
-                    <textarea
-                        matInput
-                        rows="2"
-                        autocomplete="off"
-                        required
-                        name="comment"
-                        ngModel
-                        minlength="1"
-                        placeholder="Post Comment"
-                        #commentInput="ngModel">
-                    </textarea>
-                    <!-- <textarea
-                        matInput
-                        rows="2"
-                        autocomplete="off"
-                        required
-                        name="comment"
-                        [(ngModel)]="comment"
-                        [ngModelOptions]="{standalone: true}"
-                        minlength="1"
-                        placeholder="Post Comment"
-                        #commentInput="ngModel"> -->
-                </mat-form-field>
-                <button mat-raised-button color="accent" type="submit">Post Comment</button>
-            </form>
+        <mat-action-row class="actions" >
+            <div class="action-link">
+                <a mat-raised-button color="primary" 
+                [routerLink]="['/thread', post.id]">View Thread</a>
+            </div>
+            <div class="action-link" [hidden]="!userIsAuthenticated || userId !== post.creator">
+                <a mat-raised-button color="accent" 
+                hidden
+                [routerLink]="['/edit', post.id]">Edit Post</a>
+            </div>
+            <div class="action-link" [hidden]="!userIsAuthenticated || userId !== post.creator">
+                <button mat-raised-button color="warn" 
+                (click)="onDelete(post.id)">Delete Post</button>
+            </div>
         </mat-action-row>
 
     </mat-expansion-panel>

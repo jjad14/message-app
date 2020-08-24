@@ -1,0 +1,83 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-card class="post-card">
+    
+    <mat-card-header>
+        <mat-card-title>{{ title }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+        <div class="thread-block">
+            <div class="thread-image">
+                <img mat-card-image align="left" *ngIf="imagePreview" [src]="imagePreview" [alt]="title">
+            </div>
+            <div class="content">
+                <p>{{ content }}</p>
+            </div>
+
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="comment-card" *ngIf="userIsAuthenticated">
+    <mat-accordion  class="comment-card">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Post your Comment!
+                    </mat-panel-title>
+            </mat-expansion-panel-header>
+            <form (ngSubmit)="onComment(commentForm)" #commentForm="ngForm">
+                <div class="comment-block">
+                    <div class="comment-field">
+                        <mat-form-field>
+                            <textarea
+                                matInput
+                                rows="2"
+                                autocomplete="off"
+                                required
+                                name="comment"
+                                ngModel
+                                minlength="1"
+                                placeholder="Post Comment"
+                                #commentInput="ngModel">
+                            </textarea>
+                            <mat-error *ngIf="commentInput.invalid">Please enter a valid comment.</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="comment-button">
+                        <button mat-raised-button color="accent" type="submit">Post Comment</button>
+                    </div>
+                </div>
+            </form>
+        </mat-expansion-panel>
+    </mat-accordion>
+</mat-card>
+
+
+  <!-- Multi-line lists -->
+  <mat-card class="reply-card">
+    <mat-list>
+        <mat-list-item *ngFor="let comment of comments">
+          <hr>
+          <p matLine>
+            <span> {{comment.createdBy}} </span>
+            <span class="demo-2"> says: {{comment.content}} </span>
+          </p>
+          <hr>
+          <h3 matLine> {{comment.createdAt | date:'medium'}} </h3>
+        </mat-list-item>
+      </mat-list>
+  </mat-card>
+
+
+<div class="paginator">
+    <mat-paginator [length]="totalComments" 
+        [pageSize]="commentsPerPage"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onChangedPage($event)"
+        *ngIf="comments.length > 0">
+    </mat-paginator>
+</div>
+
+
+<p class="info-text mat-body-1"  *ngIf="comments.length <= 0">No comments on this post yet!</p> 

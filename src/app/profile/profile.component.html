@@ -100,10 +100,21 @@
               </div>
           </div>
 
-            <mat-action-row *ngIf="userIsAuthenticated && userId === post.creator">
-                <a mat-raised-button color="accent" [routerLink]="['/edit', post.id]">EDIT</a>
-                <button mat-raised-button color="warn" (click)="onDeletePost(post.id)">DELETE</button>
-            </mat-action-row>
+            <mat-action-row class="actions" *ngIf="userIsAuthenticated && userId === post.creator">
+              <div class="action-link">
+                  <a mat-raised-button color="primary" 
+                  [routerLink]="['/thread', post.id]">View Thread</a>
+              </div>
+              <div class="action-link">
+                  <a mat-raised-button color="accent" 
+                  hidden
+                  [routerLink]="['/edit', post.id]">Edit Post</a>
+              </div>
+              <div class="action-link">
+                  <button mat-raised-button color="warn" 
+                  (click)="onDeletePost(post.id)">Delete Post</button>
+              </div>
+          </mat-action-row>
 
         </mat-expansion-panel>
     </mat-accordion>

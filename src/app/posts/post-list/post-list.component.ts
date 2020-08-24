@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
 import { AuthService } from 'src/app/auth/auth.service';
-import { NgForm } from '@angular/forms';
 
 @Component({
     selector: 'app-post-list',
@@ -76,17 +75,6 @@ export class PostListComponent implements OnInit, OnDestroy {
         // }, () => {
         //     this.isLoading = false;
         // });
-    }
-
-    onComment(form: NgForm, post: Post) {
-        if (form.invalid) {
-            return;
-        }
-
-        // console.log(post.id + ' / ' + this.userId + ' / ' + form.value.comment);
-
-        // this.isLoading = true;
-        // this.postsService.commentOnPost(post.id, this.userId, form.value.comment);
     }
 
     ngOnDestroy() {

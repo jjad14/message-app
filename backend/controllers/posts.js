@@ -10,8 +10,7 @@ exports.createPost = (req, res, next) => {
         title: req.body.title,
         content: req.body.content,
         imagePath: url + "/images/" + req.file.filename,
-        creator: req.userData.userId,
-        comments: undefined
+        creator: req.userData.userId
     });
     post.save()
         .then(createdPost => {
@@ -132,8 +131,7 @@ exports.updatePost = (req, res, next) => {
         title: req.body.title,
         content: req.body.content,
         imagePath: imagePath,
-        creator: req.userData.userId,
-        comments: null
+        creator: req.userData.userId
     });
     // overwrite post fields with new ones
     Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
@@ -175,54 +173,4 @@ exports.deletePost = (req, res, next) => {
             message: "Deleting post failed"
         });
     });
-};
-
-// Create Comment then insert the id into Posts comments array - Not ready
-exports.commentPost = (req, res, next) => {
-    // const comment = new Comment({
-    //     content: req.body.content,
-    //     creator: req.body.user
-    // });
-
-    // comment
-    // .save()
-    // .then(createdComment => {
-    //     console.log(createdComment);
-    //     if (createdComment) {
-    //         return createdComment._id;
-    //     } else {
-    //         return res.status(400).json({
-    //             message: "Failed to create comment."
-    //         });
-    //     }
-
-    // })
-    // .then(id => {
-    //     console.log("Id: " + id);
-
-    //     Post.findByIdAndUpdate(
-    //         { _id: req.params.id },
-    //         { $push: { comments: mongoose.Schema.Types.ObjectId(id) } }
-    //     )
-    //     .then(result => {
-    //         console.log(result);
-    //         res.status(200).json({
-    //             message: "Adding Comment Successful."
-    //         });
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //         res.status(400).json({
-    //             message: "Failed to insert comment."
-    //         });
-    //     });
-
-
-    // })
-    // .catch(error => {
-    //     res.status(500).json({
-    //         message: "Operation Failed."
-    //     });
-    // });
-
 };

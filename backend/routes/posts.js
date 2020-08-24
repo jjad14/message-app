@@ -25,7 +25,4 @@ router.put("/:id", checkAuth, extractFile, PostController.updatePost);
 // Delete Post by Id
 router.delete("/:id", checkAuth, PostController.deletePost);
 
-// Comment on a post
-router.post("/comment/:id", checkAuth, PostController.commentPost);
-
 module.exports = router;

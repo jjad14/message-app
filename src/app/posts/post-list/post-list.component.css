@@ -31,24 +31,26 @@ mat-spinner {
 }
 
 
-/* Comment Form */
-.comments {
+/* action-row */
+.actions {
     display: flex;
-    flex-direction: column;
-    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
-.comments mat-form-field{
-    width: 100%;
+.action-link {
+    margin: 0 0.5rem;
 }
 
 /* Paginator */
 mat-paginator {
-    display: flex;
-    justify-content: center;
     margin-top: 1rem;
 }
 
+
 .paginator {
+    display: flex;
+    justify-content: center;
     width: 100%;
 }
+

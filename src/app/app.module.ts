@@ -14,6 +14,7 @@ import { PostsModule } from './posts/posts.module';
 import { ProfileModule } from './profile/profile.module';
 import { PipesModule } from './pipes/pipes.module';
 import { FooterComponent } from './footer/footer.component';
+import { ThreadModule } from './Thread/thread.module';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { FooterComponent } from './footer/footer.component';
     AngularMaterialModule,
     PipesModule,
     PostsModule,
+    ThreadModule,
     ProfileModule
   ],
   providers: [

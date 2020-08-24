@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     reloadComponent() {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['/same-route']);
+        this.router.navigate(['/']);
     }
 
     ngOnDestroy() {

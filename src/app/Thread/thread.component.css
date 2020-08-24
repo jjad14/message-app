@@ -1,0 +1,75 @@
+:host {
+    display: block;
+    margin-top: 1rem;
+}
+
+.info-text {
+    text-align: center;
+}
+
+mat-spinner {
+    margin: auto;
+}
+
+
+/* Thread */
+.thread-block {
+    display: flex;
+    flex-direction: row;
+}
+
+.content {
+    margin-left: 1rem;
+    width: 100%;
+    flex-grow: 2;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.thread-image {
+    min-width: 20%;
+}
+
+.thread-image img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+mat-card-content {
+    margin: 1rem;
+}
+
+/* Comments */
+.comment-card {
+    margin-top: 1rem;
+}
+
+.comment-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-field {
+    align-self: stretch;
+}
+
+.comment-field mat-form-field {
+    width: 100%;
+}
+
+.comment-button {
+    align-self: flex-end;
+}
+
+/* Reply Card*/
+.reply-card {
+    margin-top: 1rem;
+}
+
+mat-list-item {
+    margin: 1rem 0;
+    border-bottom: 1px solid black;
+}

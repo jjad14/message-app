@@ -17,7 +17,7 @@ export class AuthService {
     private token: string;
     private tokenTimer: any;
     private userId: string;
-    private userdata: User;
+    private userName: string;
     private authStatusListener = new Subject<boolean>();
 
     constructor(private http: HttpClient, private router: Router) {}
@@ -34,8 +34,8 @@ export class AuthService {
         return this.userId;
     }
 
-    getUserData() {
-        return this.userdata;
+    getUserName() {
+        return this.userName;
     }
 
     getAuthStatus() {
@@ -69,7 +69,8 @@ export class AuthService {
         this.http.post<{
             token: string,
             expiresIn: number,
-            userId: string }>(
+            userId: string,
+            username: string }>(
             BACKEND_URL + '/login', authData)
             .subscribe(res => {
                 const token = res.token;
@@ -83,13 +84,14 @@ export class AuthService {
 
                     this.isAuthenticated = true;
                     this.userId = res.userId;
+                    this.userName = res.username;
 
                     this.authStatusListener.next(true);
 
                     const now = new Date();
                     const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
 
-                    this.saveAuthData(token, expirationDate, this.userId);
+                    this.saveAuthData(token, expirationDate, this.userId, this.userName);
                     this.router.navigate(['/']);
                 }
             }, error => {
@@ -118,8 +120,8 @@ export class AuthService {
         this.http
         .put(BACKEND_URL + '/profile/' + id, userData)
         .subscribe(response => {
-            // this.router.navigateByUrl('/profile', { skipLocationChange: true }).then(() => {
-            //     this.router.navigate(['/']);
+            // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            //     this.router.navigate(['/profile']);
             // });
         });
     }
@@ -148,6 +150,7 @@ export class AuthService {
             this.token = authInfo.token;
             this.isAuthenticated = true;
             this.userId = authInfo.userId;
+            this.userName = authInfo.username;
             this.setAuthTimer(expiresIn / 1000);
             this.authStatusListener.next(true);
         }
@@ -159,7 +162,7 @@ export class AuthService {
         this.isAuthenticated = false;
         this.authStatusListener.next(false);
         this.userId = null;
-        this.userdata = null;
+        this.userName = null;
 
         clearTimeout(this.tokenTimer);
         this.clearAuthData();
@@ -174,12 +177,13 @@ export class AuthService {
     }
 
     // Save token to local storage
-    private saveAuthData(token: string, expirationDate: Date, userId: string) {
+    private saveAuthData(token: string, expirationDate: Date, userId: string, username: string) {
         // accessing local storage
         localStorage.setItem('token', token);
         // toISOString is a serialized and standard style version of the date which I then can use to recreate it
         localStorage.setItem('expiration', expirationDate.toISOString());
         localStorage.setItem('userId', userId);
+        localStorage.setItem('username', username);
     }
 
     // Clear local storage
@@ -187,6 +191,7 @@ export class AuthService {
         localStorage.removeItem('token');
         localStorage.removeItem('expiration');
         localStorage.removeItem('userId');
+        localStorage.removeItem('username');
     }
 
     // Get Token from local storage
@@ -194,6 +199,7 @@ export class AuthService {
         const token = localStorage.getItem('token');
         const expirationDate = localStorage.getItem('expiration');
         const userId = localStorage.getItem('userId');
+        const username = localStorage.getItem('username');
 
         if (!token || !expirationDate) {
             return;
@@ -202,7 +208,8 @@ export class AuthService {
         return {
             token,
             expirationDate: new Date(expirationDate),
-            userId
+            userId,
+            username
         };
     }
 }

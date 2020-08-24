@@ -18,7 +18,6 @@ export class PostsService {
 
     private posts: Post[] = [];
     private postsUpdated = new Subject<{posts: Post[], postCount: number}>();
-    private profilePostsUpdated = new Subject<{posts: Post[], postCount: number}>();
 
     constructor(
         private http: HttpClient,
@@ -62,7 +61,6 @@ export class PostsService {
                             id: post._id,
                             imagePath: post.imagePath,
                             creator: post.creator
-                            // , comments: post.comments
                         };
                     }),
                     maxPosts: postData.maxPosts
@@ -94,7 +92,6 @@ export class PostsService {
                             id: post._id,
                             imagePath: post.imagePath,
                             creator: post.creator
-                            // , comments: post.comments
                         };
                     }),
                     maxPosts: postData.maxPosts
@@ -117,7 +114,6 @@ export class PostsService {
             content: string,
             imagePath: string,
             creator: string
-            // ,comments: Comment[]
         }>(BACKEND_URL + '/' + id);
     }
 
@@ -141,8 +137,7 @@ export class PostsService {
                 title,
                 content,
                 imagePath: image,
-                creator: null,
-                comments: null
+                creator: null
             };
         }
 
@@ -166,19 +161,6 @@ export class PostsService {
           // emit socket with the post data
           this.postSocketService.emitDeletePostSocket(postData);
         });
-    }
-
-    commentOnPost(postId: string, userId: string, content: string) {
-        const commentData = {
-            user: userId,
-            content
-        };
-
-        // this.http
-        // .post<{ message: string }>(BACKEND_URL + '/comment/' + postId, commentData)
-        // .subscribe(response => {
-        //     console.log(response);
-        // });
     }
 
     //  Observe Post Socket function
