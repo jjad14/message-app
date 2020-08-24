@@ -64,6 +64,14 @@ mat-card-content {
     align-self: flex-end;
 }
 
+#date-header {
+    text-align: end;
+}
+
+#content {
+    font-size: 16px;
+}
+
 /* Reply Card*/
 .reply-card {
     margin-top: 1rem;
@@ -73,3 +81,6 @@ mat-list-item {
     margin: 1rem 0;
     border-bottom: 1px solid black;
 }
+
+/* <span> {{comment.createdBy}} </span>
+<span class="demo-2"> says: {{comment.content}} </span> */

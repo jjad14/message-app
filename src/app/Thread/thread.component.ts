@@ -47,7 +47,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.isLoading = true;
 
-        // get user id
+        // get user data
         this.userId = this.authService.getUserId();
         this.userName = this.authService.getUserName();
 
@@ -111,7 +111,6 @@ export class ThreadComponent implements OnInit, OnDestroy {
         if (form.invalid) {
             return;
         }
-
         this.threadService.addComment(this.postId, this.userName, form.value.comment);
         this.threadService.getComments(this.postId, this.commentsPerPage, this.currentPage);
 

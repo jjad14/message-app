@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 
 const User = require('../models/user');
 const Post = require('../models/post');
+const Comment = require('../models/comment');
 
 // for environment variable access
 dotenv.config();
@@ -94,10 +95,6 @@ exports.userLogin = (req, res, next) => {
 
 // Update User
 exports.updateUser = (req, res, next) => {
-
-    // User.countDocuments({ username: req.body.username} );
-    
-
     User.updateOne({_id: req.params.id}, {
         $set: {
         username: req.body.username, 
@@ -125,32 +122,28 @@ exports.updateUser = (req, res, next) => {
     });
 };
 
-// Delete User
+// Delete User, their posts and their comments
 exports.deleteUser = (req, res, next) => {
-    // delete by id
     User.deleteOne({ _id: req.params.id })
     .then(result => {
-        // should be 1 if user is deleted
         if(result.deletedCount > 0) {
-            // delete users posts as well
             Post.deleteMany({creator: req.params.id})
                 .then(result => {
-                    if(result.deletedCount > 0 || result.acknowledged) {
-                        res.status(200).json({
-                            message: "Deletion Successful."
-                        });
-                    }
-                    else {
-                        res.status(400).json({
-                            message: "Deleting Profile failed"
-                        });
+                    if (result.ok == 1) {
+                        Comment.deleteMany({ createdId: req.params.id })
+                        .then(result => { 
+                            if (result.ok == 1){
+                                return res.status(200).json({
+                                    message: "Deletion Successful."
+                                });
+                            }
+                        })
                     }
                 });
-        } else {
-            res.status(400).json({
-                message: "Deleting Profile failed"
-            });
-        }
+        } 
+        res.status(400).json({
+            message: "Deleting Profile failed"
+        });
     })
     .catch(error => {
         res.status(500).json({

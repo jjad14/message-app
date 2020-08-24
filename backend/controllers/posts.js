@@ -153,20 +153,26 @@ exports.updatePost = (req, res, next) => {
         });
 };
 
-// Delete Post By Id
+// Delete Post and all Comments
 exports.deletePost = (req, res, next) => {
     Post.deleteOne({ _id: req.params.id, creator: req.userData.userId })
     .then(result => {
         // should be 1 if post is deleted
         if(result.deletedCount > 0) {
-            res.status(200).json({
-                message: "Deletion Successful."
-            });
-        } else {
-            res.status(401).json({
-                message: "You are not authorized."
-            });
+            // A Post could have no comments
+            Comment.deleteMany({ postId: req.params.id })
+                .then(result => {
+                    //  check if no errors occurred since we cant check deletedCount 
+                    if (result.ok == 1){
+                        return res.status(200).json({
+                            message: "Deletion Successful."
+                        });
+                    }
+                })
         }
+        res.status(401).json({
+            message: "You are not authorized."
+        });
     })
     .catch(error => {
         res.status(500).json({

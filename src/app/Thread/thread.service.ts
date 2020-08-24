@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
 import { environment } from '../../environments/environment';
+import { ThreadSocketService } from './thread-socket.service';
 
 const BACKEND_URL = environment.apiUrl + '/thread';
 
@@ -20,7 +21,10 @@ export class ThreadService {
     constructor(
         private http: HttpClient,
         private router: Router,
-        private authService: AuthService) { }
+        private authService: AuthService,
+        private threadSocketService: ThreadSocketService) {
+            this.observePostSocket();
+        }
 
     addComment(id: string, username: string, content: string) {
         const commentData = {
@@ -29,12 +33,13 @@ export class ThreadService {
         };
 
         this.http
-        .post<{message: string }>(
+        .post<{message: string, comment: Comment }>(
             BACKEND_URL + '/' + id,
             commentData
         )
         .subscribe((resData) => {
-            // this.router.navigate(['/']);
+            // this.router.navigate(['/thread', id]);
+            this.threadSocketService.emitCreateCommentSocket(resData.comment);
         });
     }
 
@@ -73,6 +78,22 @@ export class ThreadService {
         return this.commentsUpdated.asObservable();
     }
 
+    private observePostSocket() {
+        this.threadSocketService.receiveCreateCommentSocket()
+        .subscribe((comment: any) => {
+          console.log(`Create ${comment.id} Post socket received`);
+          this.refreshComments(comment);
+        });
+
+
+    }
+
+    // refresh posts
+    private refreshComments(comment: any) {
+    if (comment.createdId !== this.authService.getUserId()) {
+        // this.getPosts();
+    }
+    }
 
 }
 

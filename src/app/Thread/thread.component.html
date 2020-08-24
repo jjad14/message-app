@@ -58,13 +58,8 @@
   <mat-card class="reply-card">
     <mat-list>
         <mat-list-item *ngFor="let comment of comments">
-          <hr>
-          <p matLine>
-            <span> {{comment.createdBy}} </span>
-            <span class="demo-2"> says: {{comment.content}} </span>
-          </p>
-          <hr>
-          <h3 matLine> {{comment.createdAt | date:'medium'}} </h3>
+            <p id="date-header" matLine> {{comment.createdAt | date:'medium'}} </p>
+          <p id="content" matLine>{{comment.createdBy}} says: {{comment.content}}</p>
         </mat-list-item>
       </mat-list>
   </mat-card>
