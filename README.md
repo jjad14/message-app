@@ -1,5 +1,7 @@
 # MessageApp
 
+Demo: http://angular-message-app.s3-website.us-east-2.amazonaws.com/
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.24.
 
 ## Development server
